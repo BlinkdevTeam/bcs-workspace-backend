@@ -1,6 +1,6 @@
 "use strict";
 
-const User = require("../models/User");
+const User = require("../models/core/user");
 
 exports.getAll = async (_req, res, next) => {
   try {
@@ -14,7 +14,10 @@ exports.getAll = async (_req, res, next) => {
 exports.getById = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     res.json({ success: true, data: user });
   } catch (err) {
     next(err);

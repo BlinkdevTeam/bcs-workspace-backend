@@ -1,8 +1,10 @@
 "use strict";
 
-const app             = require("./app");
-const config          = require("./config");
-const { connectDB }   = require("./config/database");
+require("./models"); // IMPORTANT: loads all Sequelize models
+
+const app = require("./app");
+const config = require("./config");
+const { connectDB } = require("./config/database");
 
 const start = async () => {
   await connectDB();
