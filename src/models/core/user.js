@@ -12,12 +12,18 @@ const User = sequelize.define(
       primaryKey: true,
     },
 
-    employee_id: DataTypes.UUID,
+    employee_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
 
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
 
     password_hash: {
@@ -28,6 +34,7 @@ const User = sequelize.define(
     role: {
       type: DataTypes.STRING(30),
       allowNull: false,
+      defaultValue: "employee",
     },
 
     is_active: {
@@ -35,13 +42,17 @@ const User = sequelize.define(
       defaultValue: true,
     },
 
-    last_login_at: DataTypes.DATE,
+    last_login_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
   {
     tableName: "users",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: false,
+
     paranoid: true,
     deletedAt: "deleted_at",
   },
