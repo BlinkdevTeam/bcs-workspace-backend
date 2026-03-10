@@ -2,7 +2,8 @@
 
 const User = require("../models/core/user");
 const { sequelize } = require("../config/database");
-const bcrypt = require("bcrypt"); // ← import bcrypt
+const bcrypt = require("bcrypt");
+const CompanyProfile = require("../models/company/profile");
 
 // ─────────────────────────────────────────────
 // CHECK SETUP STATUS
@@ -43,15 +44,27 @@ exports.createSetup = async (req, res, next) => {
     }
 
     // 2️⃣ Hash the password before saving
-    const hashedPassword = await bcrypt.hash(admin.password, 10); // 10 = salt rounds
+    const hashedPassword = await bcrypt.hash(admin.password, 10);
 
-    // 3️⃣ Create super admin
+    // 3️⃣ Create the super admin with full required fields
     const newAdmin = await User.create(
       {
-        email: admin.email,
-        password_hash: hashedPassword, // ← save the hash, not plain text
+        first_name: admin.firstName,
+        last_name: admin.lastName,
+        work_email: admin.email, // updated column name
+        password_hash: hashedPassword,
         role: "super_admin",
         is_active: true,
+      },
+      { transaction: t },
+    );
+
+    // 4️⃣ Create company profile
+    const newCompany = await CompanyProfile.create(
+      {
+        company_name: company.companyName,
+        industry: company.industry,
+        company_size: company.size,
       },
       { transaction: t },
     );
@@ -61,7 +74,10 @@ exports.createSetup = async (req, res, next) => {
     res.json({
       success: true,
       message: "Setup complete",
-      data: newAdmin,
+      data: {
+        admin: newAdmin,
+        company: newCompany,
+      },
     });
   } catch (err) {
     await t.rollback();

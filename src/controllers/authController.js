@@ -7,9 +7,9 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // find user
+    // find user by work_email (not the old 'email' column)
     const user = await User.findOne({
-      where: { email },
+      where: { work_email: email }, // updated column
     });
 
     if (!user) {
@@ -29,11 +29,17 @@ exports.login = async (req, res) => {
       });
     }
 
+    // optionally update last login timestamp
+    user.last_login_at = new Date();
+    await user.save();
+
     return res.json({
       success: true,
       user: {
         id: user.id,
-        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        work_email: user.work_email, // use work_email
         role: user.role,
       },
     });

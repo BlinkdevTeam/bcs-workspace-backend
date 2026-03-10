@@ -26,12 +26,12 @@ app.use("/setup", setupRoutes);
 const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
 
-// Example future routes
-// const userRoutes = require("./routes/usersRoutes");
-// app.use("/users", userRoutes);
+const healthRoutes = require("./routes/health");
+app.use("/api", healthRoutes);
 
-// const payrollRoutes = require("./routes/payrollRoutes");
-// app.use("/payroll", payrollRoutes);
+// Stats API
+const statsRoutes = require("./routes/stats");
+app.use("/api", statsRoutes);
 
 // ── HEALTH CHECK (Optional but useful) ─────────────────────
 app.get("/", (req, res) => {

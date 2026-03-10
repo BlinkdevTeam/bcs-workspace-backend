@@ -61,6 +61,16 @@ const TaskTagAssignment = require("./task/taskTagAssignment");
 const TaskTimeLog = require("./task/taskTimeLog");
 
 // ─────────────────────────────────
+// COMPANY PROFILE MODELS
+// ─────────────────────────────────
+const CompanyProfile = require("./company/profile");
+
+// ─────────────────────────────────
+// LOGS HISTORY MODELS
+// ─────────────────────────────────
+const LogsHistory = require("./logs/history");
+
+// ─────────────────────────────────
 // CORE RELATIONSHIPS
 // ─────────────────────────────────
 Employee.belongsTo(Department, { foreignKey: "department_id" });
@@ -239,4 +249,8 @@ module.exports = {
   TaskTag,
   TaskTagAssignment,
   TaskTimeLog,
+
+  CompanyProfile,
+
+  LogsHistory,
 };

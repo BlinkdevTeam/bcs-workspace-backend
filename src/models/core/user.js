@@ -12,12 +12,17 @@ const User = sequelize.define(
       primaryKey: true,
     },
 
-    employee_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
 
-    email: {
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    work_email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
