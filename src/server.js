@@ -33,6 +33,11 @@ app.use("/api", healthRoutes);
 const statsRoutes = require("./routes/stats");
 app.use("/api", statsRoutes);
 
+const employeeRoutes = require("./routes/employeeRoutes");
+
+// This makes all /employees routes work
+app.use("/employees", employeeRoutes);
+
 // ── HEALTH CHECK (Optional but useful) ─────────────────────
 app.get("/", (req, res) => {
   res.json({

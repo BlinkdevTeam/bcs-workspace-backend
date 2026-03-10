@@ -44,7 +44,10 @@ const Employee = sequelize.define(
 
     avatar_initials: DataTypes.STRING(4),
 
-    department_id: DataTypes.UUID,
+    department_id: {
+      type: DataTypes.UUID,
+      allowNull: true, // now optional
+    },
 
     role_title: {
       type: DataTypes.STRING(150),
@@ -68,7 +71,10 @@ const Employee = sequelize.define(
 
     end_date: DataTypes.DATEONLY,
 
-    manager_id: DataTypes.UUID,
+    manager_id: {
+      type: DataTypes.UUID,
+      allowNull: true, // now optional
+    },
   },
   {
     tableName: "employees",
